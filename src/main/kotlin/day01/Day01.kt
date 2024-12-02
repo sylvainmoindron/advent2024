@@ -1,8 +1,9 @@
 package org.example.day01
 
+import day01.Day
 import java.io.File
 
-class Day01 {
+class Day01 :Day() {
 
     private val list01: List<Int>
     private val list02: List<Int>
@@ -25,7 +26,7 @@ class Day01 {
 
     }
 
-    fun part01() {
+    override fun part01() {
         val list1Sorted = list01.sorted()
         val list2Sorted = list02.sorted()
 
@@ -34,7 +35,7 @@ class Day01 {
     }
 
 
-    fun part02() {
+    override fun part02() {
         val countList02 = mutableMapOf<Int,Int>()
         list02.asSequence().forEach {
             countList02[it] = 1 + (countList02[it]?:0)
@@ -49,6 +50,5 @@ class Day01 {
 
 fun main() {
     val day = Day01()
-//    day.part01()
-    day.part02()
+    day.solve()
 }
