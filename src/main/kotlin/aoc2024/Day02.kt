@@ -1,5 +1,4 @@
-import day01.Day
-import org.example.day01.Day01
+import aoc2024.Day
 import java.io.File
 import kotlin.math.abs
 

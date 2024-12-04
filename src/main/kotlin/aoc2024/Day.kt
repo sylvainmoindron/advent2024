@@ -1,4 +1,4 @@
-package day01
+package aoc2024
 
 abstract class Day {
     internal abstract fun part01(): Unit

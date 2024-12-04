@@ -1,6 +1,6 @@
 package org.example.day01
 
-import day01.Day
+import aoc2024.Day
 import java.io.File
 
 class Day01 :Day() {
