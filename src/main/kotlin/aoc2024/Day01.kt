@@ -1,4 +1,4 @@
-package org.example.day01
+package aoc2024
 
 import aoc2024.Day
 import java.io.File
@@ -12,7 +12,7 @@ class Day01 :Day() {
 
 
         val input =
-            File("/data/home/sylvain/IdeaProjects/advent2024/src/main/resources/day01.txt").bufferedReader()
+            File("src/main/resources/day01.txt").bufferedReader()
                 .lineSequence()
                 .map { line ->
                     val splited = line.split("   ")

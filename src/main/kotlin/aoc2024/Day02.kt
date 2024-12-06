@@ -1,4 +1,5 @@
-import aoc2024.Day
+package aoc2024
+
 import java.io.File
 import kotlin.math.abs
 

@@ -1,5 +1,7 @@
 package aoc2024
 
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
 import java.io.File
 
 class Day06 : Day() {
@@ -41,6 +43,8 @@ class Day06 : Day() {
 
     }
 
+    private lateinit var placeBeenSol01: MutableSet<Place>
+
     override fun part01() {
         val gard = Gard(originalPlace, originalOrientation, obstacles, outerBound)
         try {
@@ -51,38 +55,34 @@ class Day06 : Day() {
             println("Exiting the map")
         }
 
-        println("Number of places visited ${gard.placeBeen.size}")
+        placeBeenSol01 = gard.placeBeen
+
+        println("Number of places visited ${placeBeenSol01.size}")
 
     }
 
     override fun part02() {
 
         val numberOfSafableRoute =
-
-            (0..outerBound.x).sumOf { indexX ->
-                (0..outerBound.y).map { indexY ->
-                    val place = Place(indexX, indexY)
-                    if (obstacles.contains(place)) {
-                        0
-                    } else {
-                        if (place == originalPlace) {
-                            0
-                        } else {
-                            val newObstacles = setOf(place) + obstacles
-                            val gard = Gard(originalPlace,originalOrientation,newObstacles , outerBound)
+            runBlocking {
+                placeBeenSol01
+                    .asFlow()
+                    .filter { it != originalPlace }
+                    .parallelMap(Dispatchers.Default) {
+                            val newObstacles = setOf(it) + obstacles
+                            val gard = Gard(originalPlace, originalOrientation, newObstacles, outerBound)
                             try {
                                 while (true) {
                                     gard.advanceOrTurn()
                                 }
-                                0
                             } catch (e: ExitingExeption) {
-                                0
+                                null
                             } catch (e: LoopExeption) {
-                                1
+                                it
                             }
-                        }
+
                     }
-                }.sum()
+                    .count()
             }
 
         println("number of safable route $numberOfSafableRoute")
@@ -90,7 +90,15 @@ class Day06 : Day() {
 }
 
 enum class Orientation {
-    UP, DOWN, LEFT, RIGHT
+    UP, DOWN, LEFT, RIGHT;
+
+    fun turnRight() = when (this) {
+        UP -> RIGHT
+        RIGHT -> DOWN
+        DOWN -> LEFT
+        LEFT -> UP
+    }
+
 }
 
 
@@ -106,19 +114,19 @@ class Gard(
     val outerBound: Place
 ) {
     val placeBeen = mutableSetOf(place)
-    val positionBeen = mutableSetOf(Position(place, orientation))
+    private val positionBeen = mutableSetOf(Position(place, orientation))
 
 
     fun advanceOrTurn() {
-        val inFront = infront()
+        val inFront = inFront()
         if (inFront.x < 0 || inFront.x > outerBound.x || inFront.y < 0 || inFront.y > outerBound.y) {
             // go outside Map end of patrol
             throw ExitingExeption()
         }
         if (obstacles.contains(inFront)) {
-            turnRight()
+            orientation = orientation.turnRight()
         } else {
-            if (isenteringLoop(inFront)) {
+            if (isEnteringLoop(inFront)) {
                 throw LoopExeption()
             }
             place = inFront
@@ -127,23 +135,13 @@ class Gard(
         }
     }
 
-    fun isenteringLoop(inFront: Place): Boolean {
+    private fun isEnteringLoop(inFront: Place): Boolean {
         return positionBeen.contains(Position(inFront, orientation))
 
     }
 
 
-    fun turnRight() {
-        orientation = when (orientation) {
-            Orientation.UP -> Orientation.RIGHT
-            Orientation.DOWN -> Orientation.LEFT
-            Orientation.LEFT -> Orientation.UP
-            Orientation.RIGHT -> Orientation.DOWN
-        }
-    }
-
-
-    fun infront(): Place {
+    private fun inFront(): Place {
         return when (orientation) {
             Orientation.UP -> Place(place.x - 1, place.y)
             Orientation.DOWN -> Place(place.x + 1, place.y)
@@ -153,6 +151,7 @@ class Gard(
     }
 
 }
+
 
 data class Place(val x: Int, val y: Int)
 
