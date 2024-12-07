@@ -1,9 +1,6 @@
 package aoc2024
 
 
-import kotlinx.coroutines.flow.count
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.runBlocking
 import kotlin.time.measureTime
 
 abstract class Day {
@@ -35,7 +32,7 @@ fun main() {
         Day04(),
         Day05(),
         Day06(),
-//        Day07(),
+        Day07(),
 //        Day08(),
 //        Day09(),
 //        Day10(),
