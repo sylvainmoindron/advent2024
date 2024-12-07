@@ -1,5 +1,8 @@
 package aoc2024
 
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.runBlocking
 import java.io.File
 
 class Day07 : Day() {
@@ -15,26 +18,37 @@ class Day07 : Day() {
 
 
     override fun part01() {
+        runBlocking {
+            val sumPossible = input.asFlow()
+                .parallelMap {
+                    if (it.isFeasibleWith(listOf(Operator.ADD, Operator.MULTIPLY))) {
+                        it.result
+                    } else {
+                        0
+                    }
+                }.toList()
+                .sum()
 
-        val sumPossible = input.asSequence()
-            .filter { it.isFeasibleWith(listOf(Operator.ADD, Operator.MULTIPLY)) }
-            .map { it.result }
-            .sum()
 
-
-        println(" sumPossible $sumPossible")
-
+            println(" sumPossible $sumPossible")
+        }
     }
 
     override fun part02() {
-        val sumPossible = input.asSequence()
-            .filter { it.isFeasibleWith(listOf(Operator.ADD, Operator.MULTIPLY, Operator.CONCATENATE)) }
-            .map { it.result }
-            .sum()
+        runBlocking {
+            val sumPossible = input.asFlow()
+                .parallelMap {
+                    if (it.isFeasibleWith(listOf(Operator.ADD, Operator.MULTIPLY, Operator.CONCATENATE))) {
+                        it.result
+                    } else {
+                        0
+                    }
+                }.toList()
+                .sum()
 
 
-        println(" sumPossible $sumPossible")
-
+            println(" sumPossible $sumPossible")
+        }
     }
 
 }
