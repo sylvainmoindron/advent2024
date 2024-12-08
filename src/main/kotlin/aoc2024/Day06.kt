@@ -1,17 +1,20 @@
 package aoc2024
 
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.count
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.runBlocking
 import java.io.File
 
 class Day06 : Day() {
 
 
-    private val outerBound: Place
+    private val outerBound: Point
 
     //    private val obstacleMap: List<List<Boolean>>
-    private val obstacles: Set<Place>
-    private lateinit var originalPlace: Place
+    private val obstacles: Set<Point>
+    private lateinit var originalPlace: Point
     private lateinit var originalOrientation: Orientation
 
     init {
@@ -22,19 +25,19 @@ class Day06 : Day() {
             .flatMapIndexed { indexX, ligne ->
                 ligne.toCharArray().mapIndexed { indexY, it ->
                     if (it == '#') {
-                        Place(indexX, indexY)
+                        Point(indexX, indexY)
                     } else {
                         null
                     }
                 }.filterNotNull()
             }.toSet()
 
-        outerBound = Place(input.size - 1, input[0].length - 1)
+        outerBound = Point(input.size - 1, input[0].length - 1)
 
         input.forEachIndexed { indexX, ligne ->
             ligne.forEachIndexed { indexY, char ->
                 if (char == '^') {
-                    originalPlace = Place(indexX, indexY)
+                    originalPlace = Point(indexX, indexY)
                     originalOrientation = Orientation.UP
                 }
             }
@@ -43,7 +46,7 @@ class Day06 : Day() {
 
     }
 
-    private lateinit var placeBeenSol01: MutableSet<Place>
+    private lateinit var placeBeenSol01: MutableSet<Point>
 
     override fun part01() {
         val gard = Gard(originalPlace, originalOrientation, obstacles, outerBound)
@@ -105,13 +108,13 @@ enum class Orientation {
 class ExitingExeption : Exception()
 class LoopExeption : Exception()
 
-data class Position(val place: Place, val orientation: Orientation)
+data class Position(val place: Point, val orientation: Orientation)
 
 class Gard(
-    var place: Place,
+    var place: Point,
     var orientation: Orientation,
-    val obstacles: Set<Place>,
-    val outerBound: Place
+    val obstacles: Set<Point>,
+    val outerBound: Point
 ) {
     val placeBeen = mutableSetOf(place)
     private val positionBeen = mutableSetOf(Position(place, orientation))
@@ -135,25 +138,23 @@ class Gard(
         }
     }
 
-    private fun isEnteringLoop(inFront: Place): Boolean {
+    private fun isEnteringLoop(inFront: Point): Boolean {
         return positionBeen.contains(Position(inFront, orientation))
 
     }
 
 
-    private fun inFront(): Place {
+    private fun inFront(): Point {
         return when (orientation) {
-            Orientation.UP -> Place(place.x - 1, place.y)
-            Orientation.DOWN -> Place(place.x + 1, place.y)
-            Orientation.LEFT -> Place(place.x, place.y - 1)
-            Orientation.RIGHT -> Place(place.x, place.y + 1)
+            Orientation.UP -> Point(place.x - 1, place.y)
+            Orientation.DOWN -> Point(place.x + 1, place.y)
+            Orientation.LEFT -> Point(place.x, place.y - 1)
+            Orientation.RIGHT -> Point(place.x, place.y + 1)
         }
     }
 
 }
 
-
-data class Place(val x: Int, val y: Int)
 
 fun main() {
     val day = Day06()
