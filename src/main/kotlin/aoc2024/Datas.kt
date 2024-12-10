@@ -9,4 +9,11 @@ data class Point(val x: Int, val y: Int) {
         x >= innerBound.x && x <= outerBound.x && y >= innerBound.y && y <= outerBound.y
 
 
+    fun adjacentOrthogonal(): List<Point> = listOf(
+        Point(x = x, y = y - 1),
+        Point(x = x, y = y + 1),
+        Point(x = x - 1, y = y),
+        Point(x = x + 1, y = y),
+    )
+
 }

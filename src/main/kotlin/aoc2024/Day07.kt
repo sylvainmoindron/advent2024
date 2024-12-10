@@ -3,13 +3,12 @@ package aoc2024
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
-import java.io.File
 
-class Day07 : Day() {
+class Day07 : Day(7) {
 
 
-    val input =
-        File("src/main/resources/day07.txt").bufferedReader().lineSequence()
+    private val input =
+        inputReader().lineSequence()
             .map { line ->
                 val (result, numbers) = line.split(":")
                 Equation(result.toLong(), numbers.split(" ").filter { it.isNotBlank() }.map { it.toLong() })

@@ -1,10 +1,7 @@
 package aoc2024
 
 
-import java.io.File
-
-
-class Day08 : Day() {
+class Day08 : Day(8) {
 
     private val innerBound = Point(0, 0)
     private val outerBound: Point
@@ -13,7 +10,7 @@ class Day08 : Day() {
 
     init {
         val input =
-            File("src/main/resources/day08.txt").readLines()
+            inputReader().readLines()
         outerBound = Point(input.size - 1, input[0].length - 1)
         antennas = input.asSequence()
             .flatMapIndexed { x, line ->

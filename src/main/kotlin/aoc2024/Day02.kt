@@ -1,14 +1,13 @@
 package aoc2024
 
-import java.io.File
 import kotlin.math.abs
 
 
-class Day02 : Day() {
+class Day02 : Day(2) {
 
 
     val input =
-        File("src/main/resources/day02.txt").bufferedReader()
+        inputReader()
             .lineSequence()
             .map { line ->
                 line.split(" ").map { it.toInt() }

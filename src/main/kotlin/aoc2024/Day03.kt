@@ -1,11 +1,9 @@
 package aoc2024
 
-import java.io.File
-
-class Day03 : Day() {
+class Day03 : Day(3) {
 
 
-    val input = File("src/main/resources/day03.txt").readText()
+    private val input = inputReader().readText()
 
 
     override fun part01() {

@@ -1,13 +1,11 @@
 package aoc2024
 
-import java.io.File
-
-class Day09 : Day() {
+class Day09 : Day(9) {
 
     private val originalDisk: List<Int>
 
     init {
-        val input = File("src/main/resources/day09.txt").readText()
+        val input = inputReader().readText()
         originalDisk =
             sequence {
                 input
@@ -94,8 +92,8 @@ class Day09 : Day() {
         return generateSequence {
             try {
                 val pointer = nextFreeSpaces(freespacePointer)
-                freespacePointer=pointer.second+1
-                if(pointer.first >= before) return@generateSequence null
+                freespacePointer = pointer.second + 1
+                if (pointer.first >= before) return@generateSequence null
                 pointer
             } catch (e: IndexOutOfBoundsException) {
                 null

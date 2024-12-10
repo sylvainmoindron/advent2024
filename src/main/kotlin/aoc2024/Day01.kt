@@ -1,9 +1,6 @@
 package aoc2024
 
-import aoc2024.Day
-import java.io.File
-
-class Day01 :Day() {
+class Day01 : Day(1) {
 
     private val list01: List<Int>
     private val list02: List<Int>
@@ -12,7 +9,7 @@ class Day01 :Day() {
 
 
         val input =
-            File("src/main/resources/day01.txt").bufferedReader()
+            inputReader()
                 .lineSequence()
                 .map { line ->
                     val splited = line.split("   ")

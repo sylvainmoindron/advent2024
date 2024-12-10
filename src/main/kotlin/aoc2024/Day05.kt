@@ -1,12 +1,10 @@
 package aoc2024
 
-import java.io.File
 
-
-class Day05 : Day() {
+class Day05 : Day(5) {
 
     private val input =
-        File("src/main/resources/day05.txt").readLines()
+        inputReader().readLines()
 
 
     private val ruleRegex = """(\d+)\|(\d+)""".toRegex()

@@ -1,11 +1,24 @@
 package aoc2024
 
 
+import java.io.File
 import kotlin.time.measureTime
 
-abstract class Day {
+abstract class Day(val day: Int) {
     internal abstract fun part01(): Unit
     internal abstract fun part02(): Unit
+
+    fun inputReader(smaller: Boolean = false) =
+        File(
+            "src/main/resources/day${day.toString().padStart(2, '0')}${
+                if (smaller) {
+                    "_small"
+                } else {
+                    ""
+                }
+            }.txt"
+        ).bufferedReader()
+
 
     fun solve() {
         println("\n******* ${this.javaClass.simpleName}    *******")
@@ -35,7 +48,7 @@ fun main() {
         Day07(),
         Day08(),
         Day09(),
-//        Day10(),
+        Day10(),
 //        Day11(),
 //        Day12(),
 //        Day13(),
@@ -53,7 +66,7 @@ fun main() {
 //        Day25(),
     )
     val totalTime = measureTime {
-        days.parallelStream().forEach { it.solve() }
+        days.forEach { it.solve() }
     }
 
     println(" \n -> total time: $totalTime")

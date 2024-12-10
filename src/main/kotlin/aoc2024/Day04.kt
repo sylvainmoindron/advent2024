@@ -1,12 +1,10 @@
 package aoc2024
 
-import java.io.File
-
-class Day04 : Day() {
+class Day04 : Day(4) {
 
 
     val input =
-        File("src/main/resources/day04.txt").bufferedReader()
+        inputReader()
             .lineSequence()
             .map { line ->
                 line.toCharArray().toList()

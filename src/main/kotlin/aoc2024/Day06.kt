@@ -5,9 +5,8 @@ import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.count
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.runBlocking
-import java.io.File
 
-class Day06 : Day() {
+class Day06 : Day(6) {
 
 
     private val outerBound: Point
@@ -19,7 +18,7 @@ class Day06 : Day() {
 
     init {
         val input =
-            File("src/main/resources/day06.txt").readLines()
+            inputReader().readLines()
 
         obstacles = input
             .flatMapIndexed { indexX, ligne ->
