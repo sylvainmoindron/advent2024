@@ -1,16 +1,14 @@
 package aoc2024
 
+import utils.Point
+import utils.toGrid
+
 class Day10 : Day(10) {
 
 
     private val mountains =
-        inputReader(false)
-            .lineSequence()
-            .flatMapIndexed { y, line ->
-                line.mapIndexed { x, char ->
-                    Point(x, y) to char.digitToIntOrNull()
-                }
-            }.toMap()
+        inputReader(false).toGrid { it.digitToIntOrNull() }
+
 
 
     override fun part01() {

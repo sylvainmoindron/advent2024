@@ -1,9 +1,11 @@
 package aoc2024
 
+import utils.Point
+
 
 class Day08 : Day(8) {
 
-    private val innerBound = Point(0, 0)
+    private val innerBound = Point.ORIGIN
     private val outerBound: Point
 
     private val antennas: List<Antenna>
