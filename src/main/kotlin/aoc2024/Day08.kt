@@ -13,12 +13,12 @@ class Day08 : Day(8) {
     init {
         val input =
             inputReader().readLines()
-        outerBound = Point(input.size - 1, input[0].length - 1)
+        outerBound = Point(input.size - 1L, input[0].length - 1L)
         antennas = input.asSequence()
             .flatMapIndexed { x, line ->
                 line.asSequence().mapIndexed { y, c ->
                     if (c.isLetterOrDigit()) {
-                        Antenna(Point(x, y), c)
+                        Antenna(Point(x.toLong(), y.toLong()), c)
                     } else {
                         null
                     }

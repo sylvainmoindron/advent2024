@@ -25,19 +25,19 @@ class Day06 : Day(6) {
             .flatMapIndexed { indexX, ligne ->
                 ligne.toCharArray().mapIndexed { indexY, it ->
                     if (it == '#') {
-                        Point(indexX, indexY)
+                        Point(indexX.toLong(), indexY.toLong())
                     } else {
                         null
                     }
                 }.filterNotNull()
             }.toSet()
 
-        outerBound = Point(input.size - 1, input[0].length - 1)
+        outerBound = Point(input.size - 1L, input[0].length - 1L)
 
         input.forEachIndexed { indexX, ligne ->
             ligne.forEachIndexed { indexY, char ->
                 if (char == '^') {
-                    originalPlace = Point(indexX, indexY)
+                    originalPlace = Point(indexX.toLong(), indexY.toLong())
                     originalOrientation = Orientation.UP
                 }
             }
