@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.count
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.runBlocking
 import utils.Point
+import utils.parallelMap
 
 class Day06 : Day(6) {
 

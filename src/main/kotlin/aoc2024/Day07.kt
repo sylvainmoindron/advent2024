@@ -3,6 +3,7 @@ package aoc2024
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
+import utils.parallelMap
 
 class Day07 : Day(7) {
 
