@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.count
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.runBlocking
+import utils.Orientation
 import utils.Point
 import utils.parallelMap
 
@@ -93,17 +94,7 @@ class Day06 : Day(6) {
     }
 }
 
-enum class Orientation {
-    UP, DOWN, LEFT, RIGHT;
 
-    fun turnRight() = when (this) {
-        UP -> RIGHT
-        RIGHT -> DOWN
-        DOWN -> LEFT
-        LEFT -> UP
-    }
-
-}
 
 
 class ExitingExeption : Exception()
