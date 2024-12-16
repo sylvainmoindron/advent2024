@@ -10,6 +10,13 @@ enum class Orientation {
         LEFT -> UP
     }
 
+    fun turnLeft() = when (this) {
+        UP -> LEFT
+        RIGHT -> UP
+        DOWN -> RIGHT
+        LEFT -> DOWN
+    }
+
 
     companion object {
         fun of(char: Char): Orientation =

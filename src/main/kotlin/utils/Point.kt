@@ -9,6 +9,13 @@ data class Point(val x: Long, val y: Long) {
     fun isInbound(innerBound: Point, outerBound: Point) =
         x >= innerBound.x && x <= outerBound.x && y >= innerBound.y && y <= outerBound.y
 
+    fun move(orientation: Orientation): Point =
+        when (orientation) {
+            Orientation.UP -> copy(y = y - 1)
+            Orientation.DOWN -> copy(y = y + 1)
+            Orientation.LEFT -> copy(x = x - 1)
+            Orientation.RIGHT -> copy(x = x + 1)
+        }
 
     fun adjacentOrthogonal(): List<Point> = listOf(
         Point(x = x, y = y - 1),
