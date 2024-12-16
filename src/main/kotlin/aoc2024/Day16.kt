@@ -21,17 +21,17 @@ class Day16 : Day(16) {
 
 
     override fun part01() {
-        val (cost,_) = bestPlacesCount(false)
+        val (cost, _) = bestPlacesCount(false)
         println("cost $cost")
     }
 
     override fun part02() {
-        val (_,number) = bestPlacesCount(true)
+        val (_, number) = bestPlacesCount(true)
         println("bestPlacesCount $number")
     }
 
 
-    private fun bestPlacesCount(exploreAll: Boolean): Pair<Int,Int> {
+    private fun bestPlacesCount(exploreAll: Boolean): Pair<Int, Int> {
         val visited = mutableSetOf<State>()
         val unvisited = PriorityQueue<Path>(compareBy { it.cost })
         unvisited += Path(State(start, Orientation.RIGHT), 0, emptyList())
@@ -48,15 +48,28 @@ class Day16 : Day(16) {
                 } else break
                 if (!exploreAll) break
             }
-            unvisited += listOf(
-                Path(State(state.point, state.orientation.turnLeft()), cost + 1000, path + state),
-                Path(State(state.point, state.orientation.turnRight()), cost + 1000, path + state),
-                Path(State(state.point.move(state.orientation), state.orientation), cost + 1, path + state),
-            ).filter { it.state !in visited && grid[it.state.point] != '#' }
+
+            unvisited += buildList {
+                val left = Path(State(state.point, state.orientation.turnLeft()), cost + 1000, path + state)
+                if (grid[left.state.point.move(left.state.orientation)] != '#' && left.state !in visited) {
+                    // don't add if face wall
+                    add(left)
+                }
+                val right = Path(State(state.point, state.orientation.turnRight()), cost + 1000, path + state)
+                if (grid[right.state.point.move(right.state.orientation)] != '#' && right.state !in visited) {
+                    // don't add if face wall
+                    add(right)
+                }
+                val front = Path(State(state.point.move(state.orientation), state.orientation), cost + 1, path + state)
+                if (grid[front.state.point] != '#' && front.state !in visited ) {
+                    // don't add if it goes into wall
+                    add(front)
+                }
+            }
 
 
         }
-        return Pair(bestCost,bestPoints.size)
+        return Pair(bestCost, bestPoints.size)
     }
 
 
