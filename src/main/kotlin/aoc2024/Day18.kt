@@ -32,11 +32,13 @@ class Day18 : Day(18) {
             .binarySearch(fromIndex = byteFallen) {
                 if (it.walk() != -1) -1 else 1
             }
+        println("trouve  ${memorySPace[resulindex.absoluteValue-1]}")
+
+
     }
 
 
     private fun List<Point>.walk(): Int {
-        println("walking ${this.size} obstacle")
         val start = origin
         val end = outerBound
 
