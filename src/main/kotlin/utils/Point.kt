@@ -1,10 +1,14 @@
 package utils
 
+import kotlin.math.abs
+
 
 data class Point(val x: Long, val y: Long) {
     operator fun minus(second: Point) = Point(x - second.x, y - second.y)
     operator fun plus(second: Point) = Point(x + second.x, y + second.y)
     operator fun times(i: Long) = Point(x * i, y * i)
+
+    fun manhattanDistanceTo(other: Point) = abs(x - other.x) + abs(y - other.y)
 
     fun isInbound(innerBound: Point, outerBound: Point) =
         x >= innerBound.x && x <= outerBound.x && y >= innerBound.y && y <= outerBound.y
