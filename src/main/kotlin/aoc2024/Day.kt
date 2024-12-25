@@ -62,8 +62,8 @@ fun main() {
         Day21(),
         Day22(),
         Day23(),
-//        Day24(),
-//        Day25(),
+        Day24(),
+        Day25(),
     )
     val totalTime = measureTime {
         days.forEach { it.solve() }
